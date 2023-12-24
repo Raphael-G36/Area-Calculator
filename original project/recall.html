@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Recalling HTML</title>
+    <link rel="stylesheet" href="style.css">
+
+
+    <style>
+        #content {
+            text-align: center;
+            /* margin-top: 150px; */
+            border-radius: 30px;
+            box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.3);
+            padding-bottom: 60px;
+            margin: 150px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            border-radius: 40px;
+            padding: 20px;
+            background-color: rgba(70, 34, 230, 0.945);
+            color: white;
+        }
+
+        #shape {
+            width: 300px;
+            border-radius: 150px;
+            border: none;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+            padding-left: 5px;
+            margin-bottom: 50px;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        .calculate {
+            margin-top: 30px;
+            padding: 10px;
+            border-radius: 30px;
+            border: none;
+            background-color: rgba(70, 34, 230, 0.945);
+            color: white;
+            box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+        }
+
+        .calculate:hover {
+            opacity: 0.8;
+        }
+
+        .calculate:active {
+            opacity: 0.5
+        }
+
+        .table {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <h1>SIMPLE AREA CALCULATOR</h1>
+        <form id="calculateArea">
+            <label for="shape">Select shape:</label>
+            <select id="shape">
+                <option value="rectangle" selected>rectangle</option>
+                <option value="triangle">triangle</option>
+                <option value="circle">circle</option>
+                <option value="parallelogram">parallelogram</option>
+                <option value="square">square</option>
+            </select><br>
+
+            <div id="rectangle_fields" style="display: none;">
+                <label for="length">Length:</label>
+                <input type="number" id="length">
+                <label for="breadth">Breadth:</label>
+                <input type="number" id="breadth">
+            </div>
+
+            <div id="triangle_fields" style="display: none;">
+                <label for="base">Base:</label>
+                <input type="number" id="base">
+                <label for="height">Height:</label>
+                <input type="number" id="height">
+            </div>
+
+            <div id="circle_fields" style="display: none">
+                <label for="radius">Radius:</label>
+                <input type="number" id="radius">
+            </div>
+
+            <div id="parallelogram_fields" style="display: none">
+                <label for="pBase">pBase:</label>
+                <input type="number" id="pBase">
+                <label for="pHeight">pHeight:</label>
+                <input type="number" id="pHeight">
+            </div>
+
+            <div id="square_fields" style="display: none">
+                <label for="sideLength">sideLength:</label>
+                <input type="number" id="sideLength">
+            </div>
+
+
+            <button id="calculate" type="button" class="calculate">calculate</button>
+
+            <p id="result">
+
+            </p>
+            <table class="table" id="history_display">
+                <!-- <th>ID</th> -->
+                <th>SHAPE</th>
+                <th>LENGTH</th>
+                <th>BREADTH</th>
+                <th>RADIUS</th>
+                <th>SIDELENGTH</th>
+                <th>BASE</th>
+                <th>HEIGHT</th>
+                <th>PHEIGHT</th>
+                <th>PBASE</th>
+                <th>RESULT</th>
+                <table>
+                    <th>ACTION</th>
+                    <td>
+                        <button>insert</button>
+                    </td>
+                </table>
+            </table>
+        </form>
+    </div>
+    <script>
+        const shapeSelect = document.getElementById('shape');
+        const rectangleFields = document.getElementById('rectangle_fields');
+        const triangleFields = document.getElementById('triangle_fields');
+        const circleFields = document.getElementById('circle_fields');
+        const squareFields = document.getElementById('square_fields');
+        const parallelogramFields = document.getElementById('parallelogram_fields');
+        const calculateButton = document.getElementById('calculate');
+        const resultArea = document.getElementById('result');
+
+        function ChangeInput() {
+
+            const shape = (shapeSelect.value);
+            const length = 0;
+            const breadth = 0;
+            const base = 0;
+            const height = 0;
+            const radius = 0;
+            const sideLength = 0;
+            const pBase = 0;
+            const pHeight = 0;
+            if (shapeSelect.value == "rectangle") {
+                rectangleFields.style.display = "block";
+                triangleFields.style.display = "none";
+                squareFields.style.display = "none";
+                circleFields.style.display = "none";
+                parallelogramFields.style.display = "none";
+
+            } else if (shapeSelect.value == "triangle") {
+                rectangleFields.style.display = "none";
+                triangleFields.style.display = "block";
+                squareFields.style.display = "none";
+                circleFields.style.display = "none";
+                parallelogramFields.style.display = "none";
+
+            } else if (shapeSelect.value == "square") {
+                rectangleFields.style.display = "none";
+                triangleFields.style.display = "none";
+                squareFields.style.display = "block";
+                circleFields.style.display = "none";
+                parallelogramFields.style.display = "none";
+
+            } else if (shapeSelect.value == "circle") {
+                rectangleFields.style.display = "none";
+                triangleFields.style.display = "none";
+                squareFields.style.display = "none";
+                circleFields.style.display = "block";
+                parallelogramFields.style.display = "none";
+
+            } else if (shapeSelect.value == "parallelogram") {
+                rectangleFields.style.display = "none";
+                triangleFields.style.display = "none";
+                squareFields.style.display = "none";
+                circleFields.style.display = "none";
+                parallelogramFields.style.display = "block";
+            }
+        }
+
+        shapeSelect.addEventListener('change', () => {
+            const shape = (shapeSelect.value);
+            const length = parseInt(document.getElementById('length').value) || 0;
+            const breadth = parseInt(document.getElementById('breadth').value) || 0;
+            const base = parseInt(document.getElementById('base').value) || 0;
+            const height = parseInt(document.getElementById('height').value) || 0;
+            const radius = parseInt(document.getElementById('radius').value) || 0;
+            const sideLength = parseInt(document.getElementById('sideLength').value) || 0;
+            const pBase = parseInt(document.getElementById('pBase').value) || 0;
+            const pHeight = parseInt(document.getElementById('pHeight').value) || 0;
+            ChangeInput();
+        })
+
+        calculateButton.addEventListener('click', () => {
+            const shape = (shapeSelect.value);
+            const length = parseInt(document.getElementById('length').value) || 0;
+            const breadth = parseInt(document.getElementById('breadth').value) || 0;
+            const base = parseInt(document.getElementById('base').value) || 0;
+            const height = parseInt(document.getElementById('height').value) || 0;
+            const radius = parseInt(document.getElementById('radius').value) || 0;
+            const sideLength = parseInt(document.getElementById('sideLength').value) || 0;
+            const pBase = parseInt(document.getElementById('pBase').value) || 0;
+            const pHeight = parseInt(document.getElementById('pHeight').value) || 0;
+
+            const url = "http://127.0.0.1:8000/calculate/";
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({ shape, length, breadth, base, height, radius, sideLength, pBase, pHeight })
+
+            })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('length').value = 0;
+                    document.getElementById('breadth').value = 0;
+                    document.getElementById('base').value = 0;
+                    document.getElementById('radius').value = 0;
+                    document.getElementById('sideLength').value = 0;
+                    document.getElementById('pBase').value = 0;
+                    document.getElementById('pHeight').value = 0;
+                    resultArea.textContent = `Area: ${data.Area}`;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                });
+
+            fetch("http://127.0.0.1:8000/")
+                .then(response => response.json())
+                .then(data => {
+                    const recordTable = document.getElementById("history_display");
+                    data.forEach(item => {
+                        const row = recordTable.insertRow();
+                        const cell1 = row.insertCell(0)
+                        cell1.innerText = item.shape
+                        const cell2 = row.insertCell(1)
+                        cell2.innerText = item.length
+                        const cell3 = row.insertCell(2)
+                        cell3.innerText = item.breadth
+                        const cell4 = row.insertCell(3)
+                        cell4.innerText = item.base
+                        const cell5 = row.insertCell(4)
+                        cell5.innerText = item.height
+                        const cell6 = row.insertCell(5)
+                        cell6.innerText = item.radius
+                        const cell7 = row.insertCell(6)
+                        cell7.innerText = item.sideLength
+                        const cell8 = row.insertCell(7)
+                        cell8.innerText = item.pHeight
+                        const cell9 = row.insertCell(8)
+                        cell9.innerText = item.pBase
+                        const cell10 = row.insertCell(9)
+                        cell10.innerText = item.result
+                    });
+
+                })
+
+        });
+
+        ChangeInput();
+    </script>
+</body>
+
+</html>
